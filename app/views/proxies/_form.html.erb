@@ -1,0 +1,17 @@
+<%= form_with(model: proxy, local: true) do |form| %>
+  <% if proxy.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(proxy.errors.count, "error") %> prohibited this proxy from being saved:</h2>
+
+      <ul>
+      <% proxy.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
