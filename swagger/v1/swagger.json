@@ -54,6 +54,20 @@
             "description": "proxy created"
           }
         }
+      },
+      "delete": {
+        "summary": "Delete All Proxies",
+        "tags": [
+          "Proxies"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "empty response"
+          }
+        }
       }
     },
     "/proxies/batch": {

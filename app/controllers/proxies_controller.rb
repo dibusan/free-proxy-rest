@@ -37,6 +37,11 @@ class ProxiesController < ApplicationController
     end
   end
 
+  def purge
+    Proxy.destroy_all
+    render json: {}, status: 204
+  end
+
   private
     def proxy_params
       params.require(:proxy).permit(:ip, :port, :code, :country, :anonymity, :google, :https, :last_checked)

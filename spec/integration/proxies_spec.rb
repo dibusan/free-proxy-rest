@@ -3,6 +3,8 @@ require 'swagger_helper'
 describe "Proxies API" do
 
   path "/proxies" do
+
+    # Test GET
     get "Gets all proxies" do
       tags 'Proxies'
       consumes 'application/json'
@@ -10,9 +12,9 @@ describe "Proxies API" do
       response '200', 'List retrieved' do
         run_test!
       end
-
     end
 
+    # Test POST
     post "Create a Proxy" do
       tags 'Proxies'
       consumes 'application/json'
@@ -29,7 +31,16 @@ describe "Proxies API" do
         let(:proxy) { { ip: '123.12.3.123', port: 8888} }
         run_test!
       end
+    end
 
+    # Test DELETE
+    delete "Delete All Proxies" do
+      tags 'Proxies'
+      consumes 'application/json'
+
+      response '204', 'empty response' do
+        run_test!
+      end
     end
   end
 
@@ -65,4 +76,5 @@ describe "Proxies API" do
       end
     end
   end
+
 end
