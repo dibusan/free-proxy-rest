@@ -1,0 +1,100 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API V1",
+    "version": "v1"
+  },
+  "paths": {
+    "/proxies": {
+      "get": {
+        "summary": "Gets all proxies",
+        "tags": [
+          "Proxies"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "List retrieved"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a Proxy",
+        "tags": [
+          "Proxies"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "proxy",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ip": {
+                  "type": "string"
+                },
+                "port": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "ip",
+                "port"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "proxy created"
+          }
+        }
+      }
+    },
+    "/proxies/batch": {
+      "post": {
+        "summary": "Post a list of Proxies",
+        "tags": [
+          "Proxies"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "batch": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "ip": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "accepted batch create"
+          }
+        }
+      }
+    }
+  }
+}
