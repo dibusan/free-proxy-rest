@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2018_11_04_163914) do
 
-  create_table "proxies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "proxies", force: :cascade do |t|
     t.string "ip"
     t.integer "port"
     t.string "code"
