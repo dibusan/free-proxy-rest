@@ -21,11 +21,11 @@ class ProxiesController < ApplicationController
   end
 
   def create
-    @proxy = Proxy.new(proxy_params)
-    if @proxy.save
-      render json: @proxy, status: :created
+    proxy = Proxy.new(proxy_params)
+    if proxy.save
+      render json: proxy, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: proxy.errors, status: :unprocessable_entity
     end
   end
 
