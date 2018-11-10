@@ -11,16 +11,15 @@ class ProxiesController < ApplicationController
     @response.created_ids = []
     @response.failures = []
 
-    # TODO: Can this be turned into a private batch_proxy_params function (like proxy_params) ?
-    params["batch"].each do |p|
-      newP = Proxy.new(p.permit(:ip, :port))
-      if newP.save
+    proxy_batch_params[:batch].each do |proxy_params|
+      proxy = Proxy.new(proxy_params)
+      if proxy.save
         @response.total_created += 1
-        @response.created_ids.push(newP.id)
+        @response.created_ids.push(proxy.id)
       else
         failure = Failure.new
-        failure.errors = newP.errors
-        failure.proxy = newP
+        failure.errors = proxy.errors
+        failure.proxy = proxy
         @response.failures.push(failure)
       end
     end
@@ -45,5 +44,9 @@ class ProxiesController < ApplicationController
   private
     def proxy_params
       params.require(:proxy).permit(:ip, :port, :code, :country, :anonymity, :google, :https, :last_checked)
+    end
+
+    def proxy_batch_params
+      params.permit(batch: [:ip, :port])
     end
 end
