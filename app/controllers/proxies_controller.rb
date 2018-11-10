@@ -39,7 +39,7 @@ class ProxiesController < ApplicationController
 
   def purge
     Proxy.destroy_all
-    render json: {}, status: 204
+    head :no_content
   end
 
   private
