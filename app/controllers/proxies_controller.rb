@@ -6,25 +6,25 @@ class ProxiesController < ApplicationController
   end
 
   def create_batch
-    @response = ProxyBatchResponse.new
-    @response.total_created = 0
-    @response.created_ids = []
-    @response.failures = []
+    batch_response = ProxyBatchResponse.new
+    batch_response.total_created = 0
+    batch_response.created_ids = []
+    batch_response.failures = []
 
     proxy_batch_params[:batch].each do |proxy_params|
       proxy = Proxy.new(proxy_params)
       if proxy.save
-        @response.total_created += 1
-        @response.created_ids.push(proxy.id)
+        batch_response.total_created += 1
+        batch_response.created_ids.push(proxy.id)
       else
         failure = Failure.new
         failure.errors = proxy.errors
         failure.proxy = proxy
-        @response.failures.push(failure)
+        batch_response.failures.push(failure)
       end
     end
 
-    render json: @response, status: :accepted
+    render json: batch_response, status: :accepted
   end
 
   def create
