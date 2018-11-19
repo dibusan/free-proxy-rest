@@ -63,7 +63,7 @@ describe "Proxies API" do
           }
       }
 
-      response '202', 'accepted batch create' do
+      response '200', 'ok' do
         let(:data) {
           {
             batch: [
