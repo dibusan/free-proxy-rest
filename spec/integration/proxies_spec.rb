@@ -76,5 +76,4 @@ describe "Proxies API" do
       end
     end
   end
-
 end

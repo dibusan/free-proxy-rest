@@ -10,44 +10,40 @@ class ProxiesController < ApplicationController
   end
 
   def create_batch
-    @response = ProxyBatchResponse.new
-    @response.total_created = 0
-    @response.created_ids = []
-    @response.failures = []
+    batch_response = ProxyBatchResponse.new
 
-    # TODO: Can this be turned into a private batch_proxy_params function (like proxy_params) ?
-    params["batch"].each do |p|
-      newP = Proxy.new(p.permit(:ip, :port))
-      if newP.save
-        @response.total_created += 1
-        @response.created_ids.push(newP.id)
+    proxy_batch_params[:batch].each do |proxy_params|
+      proxy = Proxy.new(proxy_params)
+      if proxy.save
+        batch_response.add_success(proxy)
       else
-        failure = Failure.new
-        failure.errors = newP.errors
-        failure.proxy = newP
-        @response.failures.push(failure)
+        batch_response.add_failure(proxy)
       end
     end
 
-    render json: @response, status: :accepted
+    render json: batch_response
   end
 
   def create
-    @proxy = Proxy.new(proxy_params)
-    if @proxy.save
-      render json: @proxy, status: :created
+    proxy = Proxy.new(proxy_params)
+    if proxy.save
+      render json: proxy, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: proxy.errors, status: :unprocessable_entity
     end
   end
 
   def purge
     Proxy.destroy_all
-    render json: {}, status: 204
+    head :no_content
   end
 
   private
     def proxy_params
       params.require(:proxy).permit(:ip, :port, :code, :country, :anonymity, :google, :https, :last_checked)
+    end
+
+    def proxy_batch_params
+      params.permit(batch: [:ip, :port])
     end
 end
