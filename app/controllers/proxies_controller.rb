@@ -1,6 +1,10 @@
 class ProxiesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  def home
+    redirect_to '/api-docs/index.html'
+  end
+
   def index
     render json: Proxy.all
   end

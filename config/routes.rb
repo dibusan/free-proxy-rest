@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   post 'proxies' =>  'proxies#create'
   delete 'proxies' =>  'proxies#purge'
   post 'proxies/batch' =>  'proxies#create_batch'
+
+  root 'proxies#home'
 end
